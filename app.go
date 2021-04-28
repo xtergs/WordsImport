@@ -1,6 +1,7 @@
 package main
 
 import (
+	"WordImport/api"
 	// "fmt"
 	// "log"
 	"WordImport/import/kindle"
@@ -18,16 +19,18 @@ func main() {
 
 	provider := flag.String("provider", "kindle", "Supported values: kindle")
 	dbPath := flag.String("db", "vocab.db", "Path to vocab.db")
+	userId := flag.String("u", "", "provide telegram user id")
+	host := flag.String("host", "http://localhost:8821", "")
 
 	flag.Parse()
 
 	if *provider == "kindle" {
-		importFromKindle(*dbPath)
+		importFromKindle(*dbPath, *userId, *host)
 	}
 
 }
 
-func importFromKindle(dbPath string) {
+func importFromKindle(dbPath string, userId string, host string) {
 
 	if _, err := os.Stat(dbPath); os.IsNotExist(err) {
 		log.Fatal(err)
@@ -38,10 +41,17 @@ func importFromKindle(dbPath string) {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Will import next words:\n")
+	fmt.Printf("importing to webserver...")
+	err = api.ImportList(host, userId, words)
 
-	for wordKey := range words {
-		word := words[wordKey]
-		fmt.Printf("%s %s %s\n", word.Word, word.Stem, word.Lang)
+	if err != nil {
+		log.Fatal(err)
 	}
+
+	//fmt.Printf("Will import next words:\n")
+	//
+	//for wordKey := range words {
+	//	word := words[wordKey]
+	//	fmt.Printf("%s %s %s\n", word.Word, word.Stem, word.Lang)
+	//}
 }

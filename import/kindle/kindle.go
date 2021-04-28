@@ -1,6 +1,7 @@
 package kindle
 
 import (
+	"WordImport/models"
 	"context"
 	"fmt"
 	"log"
@@ -17,18 +18,9 @@ type KindleWord struct {
 	Usage string `db:"usage"`
 }
 
-type Usage struct {
-	Usage string
-}
 
-type Word struct {
-	Word   string
-	Stem   string
-	Lang   string
-	Usages []Usage
-}
 
-func ReadWords(file string) (map[string]Word, error) {
+func ReadWords(file string) (map[string]models.Word, error) {
 
 	var connection = "file:" + file
 
@@ -52,7 +44,7 @@ func ReadWords(file string) (map[string]Word, error) {
 		log.Fatal(err)
 	}
 
-	results := make(map[string]Word)
+	results := make(map[string]models.Word)
 	temp := KindleWord{}
 
 	for rows.Next() {
@@ -64,14 +56,14 @@ func ReadWords(file string) (map[string]Word, error) {
 		var wordKey = temp.Id
 		val, ok := results[wordKey]
 		if ok {
-			var newUsage = Usage{Usage: temp.Usage}
+			var newUsage = models.Usage{Usage: temp.Usage}
 			val.Usages = append(val.Usages, newUsage)
 		} else {
-			results[wordKey] = Word{
+			results[wordKey] = models.Word{
 				Word: temp.Word,
 				Stem: temp.Stem,
 				Lang: temp.Lang,
-				Usages: []Usage{{
+				Usages: []models.Usage{{
 					Usage: temp.Usage,
 				}},
 			}

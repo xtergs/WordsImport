@@ -1,10 +1,6 @@
-name: Go
+name: Release
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
   release:
     types: 
         - created
@@ -25,7 +21,7 @@ jobs:
       env: 
         GOOS: windows
         GOARCH: amd64
-      run: go build -o Release/WordsImport-${{ env.GITHUB_RUN_NUMBER }}-windows-amd64.exe
+      run: go build -o Release/WordsImport-${{ github.ref }}${{ github.run_number }}-windows-amd64.exe
       
     - name: Build
       env: 

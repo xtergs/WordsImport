@@ -22,13 +22,13 @@ jobs:
       env: 
         GOOS: windows
         GOARCH: amd64
-      run: go build -v ./... -o Release/WordsImport_windows_${{ steps.buildnumber.outputs.build_number }}.exe
+      run: go build -o Release/WordsImport_windows_${{ steps.buildnumber.outputs.build_number }}.exe
       
     - name: Build
       env: 
         GOOS: linux
         GOARCH: amd64
-      run: go build -v ./... -o Release/WordsImport_linux_${{ steps.buildnumber.outputs.build_number }}
+      run: go build -o Release/WordsImport_linux_${{ steps.buildnumber.outputs.build_number }}
 
   
     - name: Upload a Build Artifact

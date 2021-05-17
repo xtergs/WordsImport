@@ -21,13 +21,13 @@ jobs:
       env: 
         GOOS: windows
         GOARCH: amd64
-      run: go build -o Release/WordsImport-${{ github.ref }}${{ github.run_number }}-windows-amd64.exe
+      run: go build -o Release/WordsImport-${{ github.event.ref }}-windows-amd64-${{ github.run_number }}.exe
       
     - name: Build
       env: 
         GOOS: linux
         GOARCH: amd64
-      run: go build -o Release/WordsImport-${{ env.GITHUB_RUN_NUMBER }}-linux-amd64
+      run: go build -o Release/WordsImport-${{ github.event.ref }}-linux-amd64-${{ github.run_number }}
 
   
     - name: Upload a Build Artifact

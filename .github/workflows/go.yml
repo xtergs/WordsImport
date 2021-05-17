@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  release:
+    types: 
+        - created
 
 jobs:
 
@@ -18,11 +21,21 @@ jobs:
       with:
         go-version: 1.16
         
-    - name: Generate build files
-      uses: thatisuday/go-cross-build@v1
-      with:
-          platforms: 'linux/amd64, windows/amd64'
-          package: ''
-          name: 'WordsImport-${{ env.GITHUB_RUN_NUMBER }}'
-          compress: 'false'
+    - name: Build
+      env: 
+        GOOS: windows
+        GOARCH: amd64
+      run: go build -o Release/WordsImport-${{ env.GITHUB_RUN_NUMBER }}-windows-amd64.exe
       
+    - name: Build
+      env: 
+        GOOS: linux
+        GOARCH: amd64
+      run: go build -o Release/WordsImport-${{ env.GITHUB_RUN_NUMBER }}-linux-amd64
+
+  
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.3
+      with:
+        path: Release
+        # The desired behavior if no files are found using the provided path.

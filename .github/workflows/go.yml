@@ -1,0 +1,41 @@
+name: Go
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: 
+        - created
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+        
+    - name: Build
+      env: 
+        GOOS: windows
+        GOARCH: amd64
+      run: go build -o Release/WordsImport-${{ env.GITHUB_RUN_NUMBER }}-windows-amd64.exe
+      
+    - name: Build
+      env: 
+        GOOS: linux
+        GOARCH: amd64
+      run: go build -o Release/WordsImport-${{ env.GITHUB_RUN_NUMBER }}-linux-amd64
+
+  
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.3
+      with:
+        path: Release
+        # The desired behavior if no files are found using the provided path.

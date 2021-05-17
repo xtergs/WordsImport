@@ -39,3 +39,11 @@ jobs:
       with:
         path: Release
         # The desired behavior if no files are found using the provided path.
+    - name: GitHub Releases
+      # You may pin to the exact commit or the version.
+      # uses: fnkr/github-action-ghr@96b1448dc6162f370067e1de51e856e733a76b4f
+      uses: fnkr/github-action-ghr@v1.3
+      env:
+        GHR_PATH: Release/
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  

@@ -4,17 +4,11 @@ import (
 	"WordImport/api"
 	"WordImport/updates"
 
-	// "fmt"
-	// "log"
 	"WordImport/import/kindle"
 	"flag"
 	"fmt"
 	"log"
 	"os"
-	// "strings"
-	// "github.com/google/fscrypt/filesystem"
-	// "github.com/google/gousb"
-	// "github.com/google/gousb/usbid"
 )
 
 var CurrentVersion = "0"
@@ -25,24 +19,29 @@ func main() {
 
 	host := ""
 	provider := flag.String("provider", "kindle", "Supported values: kindle")
-	dbPath := flag.String("db", "vocab.db", "Path to vocab.db")
+	dbPath := flag.String("db", "vocab1.db", "Path to vocab.db")
 	userId := flag.String("u", "", "provide telegram user id")
 	if Host != "" {
 		host = Host
 	} else {
 		host = *flag.String("host", "http://localhost:8821", "")
 	}
-	skipUpdates := flag.Bool("skipUpdate", false, "")
+	skipUpdates := flag.Bool("skipUpdate", false, "Skip updates check")
 
 	flag.Parse()
 
-	fmt.Printf("Host: %s\n"+
-		"UpdateLink: %s\n"+
-		"Version: %s\n", host, UpdateLink, CurrentVersion)
+	fmt.Printf("Version: %s\n\n", CurrentVersion)
+
+	for len(*userId) <= 0 {
+		fmt.Printf("Provide telegram userId:\n")
+		fmt.Scanf("%s", userId)
+	}
 
 	if !*skipUpdates {
 		updates.CheckNewVersion(UpdateLink, CurrentVersion)
 	}
+
+	fmt.Printf("\n")
 
 	if *provider == "kindle" {
 		importFromKindle(*dbPath, *userId, host)
@@ -52,8 +51,14 @@ func main() {
 
 func importFromKindle(dbPath string, userId string, host string) {
 
-	if _, err := os.Stat(dbPath); os.IsNotExist(err) {
-		log.Fatal(err)
+	for true {
+		if _, err := os.Stat(dbPath); os.IsNotExist(err) {
+			fmt.Errorf(err.Error())
+			fmt.Printf("Provide path to db:\n")
+			fmt.Scanf("%s", &dbPath)
+		} else {
+			break
+		}
 	}
 
 	words, err := kindle.ReadWords(dbPath)

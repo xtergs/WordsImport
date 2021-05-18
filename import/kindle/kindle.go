@@ -18,8 +18,6 @@ type KindleWord struct {
 	Usage string `db:"usage"`
 }
 
-
-
 func ReadWords(file string) (map[string]models.Word, error) {
 
 	var connection = "file:" + file
@@ -72,7 +70,7 @@ func ReadWords(file string) (map[string]models.Word, error) {
 
 	rows.Close()
 
-	fmt.Println(len(results))
+	fmt.Printf("Count of words: %d\n", len(results))
 
 	return results, nil
 }

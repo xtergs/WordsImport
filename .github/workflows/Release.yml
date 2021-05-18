@@ -30,8 +30,9 @@ jobs:
       env: 
         GOOS: linux
         GOARCH: amd64
-      run: go build -o Release/WordsImport-${{ github.event.release.tag_name }}-linux-amd64-${{ github.run_number }}
-      -ldflags "-X app.CurrentVersion=${{ github.event.release.tag_name }} app.UpdateLink=https://${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/releases/latest app.Host=https://localhost"
+      run: >- 
+        go build -o Release/WordsImport-${{ github.event.release.tag_name }}-linux-amd64-${{ github.run_number }} 
+        -ldflags "-X app.CurrentVersion=${{ github.event.release.tag_name }} app.UpdateLink=https://${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/releases/latest app.Host=https://localhost"
 
   
     - name: Upload a Build Artifact

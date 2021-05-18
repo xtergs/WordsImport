@@ -2,6 +2,8 @@ package main
 
 import (
 	"WordImport/api"
+	"WordImport/updates"
+
 	// "fmt"
 	// "log"
 	"WordImport/import/kindle"
@@ -15,17 +17,31 @@ import (
 	// "github.com/google/gousb/usbid"
 )
 
+var CurrentVersion = "0"
+var UpdateLink = "https://api.github.com/repos/xtergs/WordsImport/releases/latest"
+var Host = ""
+
 func main() {
 
+	host := ""
 	provider := flag.String("provider", "kindle", "Supported values: kindle")
 	dbPath := flag.String("db", "vocab.db", "Path to vocab.db")
 	userId := flag.String("u", "", "provide telegram user id")
-	host := flag.String("host", "http://localhost:8821", "")
+	if Host != "" {
+		host = Host
+	} else {
+		host = *flag.String("host", "http://localhost:8821", "")
+	}
+	skipUpdates := flag.Bool("skipUpdate", false, "")
 
 	flag.Parse()
 
+	if !*skipUpdates {
+		updates.CheckNewVersion(UpdateLink, CurrentVersion)
+	}
+
 	if *provider == "kindle" {
-		importFromKindle(*dbPath, *userId, *host)
+		importFromKindle(*dbPath, *userId, host)
 	}
 
 }

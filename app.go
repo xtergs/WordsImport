@@ -36,6 +36,10 @@ func main() {
 
 	flag.Parse()
 
+	fmt.Printf("Host: %s\n"+
+		"UpdateLink: %s\n"+
+		"Version: %s\n", host, UpdateLink, CurrentVersion)
+
 	if !*skipUpdates {
 		updates.CheckNewVersion(UpdateLink, CurrentVersion)
 	}

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"WordsImport/api"
-	"WordsImport/updates"
+	"github.com/xtergs/WordsImport/api"
+	"github.com/xtergs/WordsImport/updates"
 
-	"WordsImport/import/kindle"
 	"flag"
 	"fmt"
+	"github.com/xtergs/WordsImport/import/kindle"
 	"log"
 	"os"
 )

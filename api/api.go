@@ -1,9 +1,9 @@
 package api
 
 import (
-	"WordsImport/models"
 	"bytes"
 	"encoding/json"
+	"github.com/xtergs/WordsImport/models"
 	"log"
 	"net/http"
 )

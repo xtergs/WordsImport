@@ -1,9 +1,9 @@
 package kindle
 
 import (
-	"WordsImport/models"
 	"context"
 	"fmt"
+	"github.com/xtergs/WordsImport/models"
 	"log"
 
 	"github.com/jmoiron/sqlx"

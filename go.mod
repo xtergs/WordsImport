@@ -1,4 +1,4 @@
-module WordsImport
+module github.com/xtergs/WordsImport
 
 go 1.16
 

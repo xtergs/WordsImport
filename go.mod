@@ -1,4 +1,4 @@
-module WordImport
+module WordsImport
 
 go 1.16
 

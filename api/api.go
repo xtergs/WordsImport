@@ -1,7 +1,7 @@
 package api
 
 import (
-	"WordImport/models"
+	"WordsImport/models"
 	"bytes"
 	"encoding/json"
 	"log"

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"WordImport/api"
-	"WordImport/updates"
+	"WordsImport/api"
+	"WordsImport/updates"
 
-	"WordImport/import/kindle"
+	"WordsImport/import/kindle"
 	"flag"
 	"fmt"
 	"log"

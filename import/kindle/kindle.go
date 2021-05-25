@@ -1,7 +1,7 @@
 package kindle
 
 import (
-	"WordImport/models"
+	"WordsImport/models"
 	"context"
 	"fmt"
 	"log"
